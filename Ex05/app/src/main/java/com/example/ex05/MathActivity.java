@@ -1,109 +1,97 @@
 package com.example.ex05;
 
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-
-import android.content.DialogInterface;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import com.example.ex05.R;
+
+import java.text.DecimalFormat;
 
 public class MathActivity extends AppCompatActivity {
-    EditText edtten, edtcmnd, edtbosung;
-    CheckBox chkdocbao, chkcode, chkdocsach;
-    Button btnsend;
-    RadioGroup group;
+    Button btnTieptuc, btnGiai, btnThoat;
+    EditText edita, editb, editc;
+    TextView txtkq;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_phuong_trinh_bac_2);
 
-        // Ánh xạ các view từ layout
-        edtten = findViewById(R.id.edtten);
-        edtcmnd = findViewById(R.id.edtcmnd);
-        edtbosung = findViewById(R.id.edtbosung);
-        chkdocbao = findViewById(R.id.chkdocbao);
-        chkcode = findViewById(R.id.chkcode);
-        chkdocsach = findViewById(R.id.chkdocsach);
-        btnsend = findViewById(R.id.btnsend);
-        group = findViewById(R.id.group);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 
-        // Xử lý sự kiện khi nhấn nút "Gửi"
-        btnsend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                doShowInformation();
-            }
+            btnTieptuc = findViewById(R.id.btntieptuc);
+            btnGiai = findViewById(R.id.btngiaipt);
+            btnThoat = findViewById(R.id.btnthoat);
+            edita = findViewById(R.id.edita);
+            editb = findViewById(R.id.editb);
+            editc = findViewById(R.id.editc);
+            txtkq = findViewById(R.id.txtkq);
+
+            btnGiai.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String sa = edita.getText() + "";
+                    String sb = editb.getText() + "";
+                    String sc = editc.getText() + "";
+                    int a = Integer.parseInt(sa);
+                    int b = Integer.parseInt(sb);
+                    int c = Integer.parseInt(sc);
+                    String kq = "";
+                    DecimalFormat dcf = new DecimalFormat("0.00");
+                    if (a == 0) {
+                        if (b == 0) {
+                            if (c == 0)
+                                kq = "PT vô số nghiệm";
+                            else
+                                kq = "PT vô nghiệm";
+                        } else {
+                            kq = "Pt có 1 No, x=" + dcf.format(-c / b);
+                        }
+                    } else {
+                        double delta = b * b - 4 * a * c;
+                        if (delta < 0) {
+                            kq = "PT vô nghiệm";
+                        } else if (delta == 0) {
+                            kq = "Pt có No kép x1=x2=" + dcf.format(-b / (2 * a));
+                        } else {
+                            kq = "Pt có 2 No: x1=" + dcf.format((-b + Math.sqrt(delta)) / (2 * a)) + "; x2=" + dcf.format((-
+                                    b - Math.sqrt(delta)) / (2 * a));
+                        }
+                    }
+                    txtkq.setText(kq);
+                }
+            });
+
+            btnTieptuc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    edita.setText("");
+                    editb.setText("");
+                    editc.setText("");
+                    edita.requestFocus();
+                }
+            });
+
+            btnThoat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+
+            return insets;
         });
-    }
-
-    public void doShowInformation() {
-        // Kiểm tra tên hợp lệ
-        String ten = edtten.getText().toString().trim();
-        if (ten.length() < 3) {
-            edtten.requestFocus();
-            edtten.selectAll();
-            Toast.makeText(this, "Tên phải >= 3 ký tự", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        // Kiểm tra CMND hợp lệ
-        String cmnd = edtcmnd.getText().toString().trim();
-        if (cmnd.length() != 9) {
-            edtcmnd.requestFocus();
-            edtcmnd.selectAll();
-            Toast.makeText(this, "CMND phải đúng 9 ký tự", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        // Kiểm tra bằng cấp
-        String bang = "";
-        int id = group.getCheckedRadioButtonId();
-        if (id == -1) {
-            Toast.makeText(this, "Phải chọn bằng cấp", Toast.LENGTH_LONG).show();
-            return;
-        }
-        RadioButton rad = findViewById(id);
-        bang = rad.getText().toString();
-
-        // Kiểm tra sở thích
-        String sothich = "";
-        if (chkdocbao.isChecked()) sothich += chkdocbao.getText() + "\n";
-        if (chkdocsach.isChecked()) sothich += chkdocsach.getText() + "\n";
-        if (chkcode.isChecked()) sothich += chkcode.getText() + "\n";
-
-        String bosung = edtbosung.getText().toString();
-
-        // Tạo nội dung thông báo
-        String msg = "Tên: " + ten + "\n";
-        msg += "CMND: " + cmnd + "\n";
-        msg += "Bằng cấp: " + bang + "\n";
-        msg += "Sở thích:\n" + sothich;
-        msg += "—————————–\n";
-        msg += "Thông tin bổ sung:\n" + bosung + "\n";
-        msg += "—————————–";
-
-        // Tạo và hiển thị AlertDialog
-        AlertDialog.Builder mydialog = new AlertDialog.Builder(MathActivity.this);
-        mydialog.setTitle("THÔNG TIN CÁ NHÂN");
-        mydialog.setMessage(msg);
-        mydialog.setPositiveButton("ĐÓNG", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
-            }
-        });
-        mydialog.create().show();
     }
 }
