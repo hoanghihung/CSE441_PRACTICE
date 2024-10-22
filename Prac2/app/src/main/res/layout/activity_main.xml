@@ -1,19 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:id="@+id/main" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <EditText android:id="@+id/staffIdEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:ems="10" android:hint="Staff id" android:inputType="text"/>
+    <EditText android:id="@+id/staffFullNameEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:ems="10" android:hint="Staff full name" android:inputType="text"/>
+    <EditText android:id="@+id/birthDateEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:ems="10" android:hint="Birth date" android:inputType="text"/>
+    <EditText android:id="@+id/salaryEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:ems="10" android:hint="Salary" android:inputType="text"/>
+    <Button android:id="@+id/addStaffButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:background="#9E8282" android:text="ADD NEW STAFF"/>
+</LinearLayout>
