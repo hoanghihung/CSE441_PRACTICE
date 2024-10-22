@@ -1,5 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:id="@+id/main" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" tools:context=".MainActivity">
-
+    <TextView android:id="@+id/staffListTextView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hello World!"/>
     <EditText android:id="@+id/staffIdEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:ems="10" android:hint="Staff id" android:inputType="text"/>
     <EditText android:id="@+id/staffFullNameEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:ems="10" android:hint="Staff full name" android:inputType="text"/>
     <EditText android:id="@+id/birthDateEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:ems="10" android:hint="Birth date" android:inputType="text"/>
